@@ -11,6 +11,6 @@ router.get("/health", (req, res) => {
   });
 });
 
-router.use("/favorite", favoriteRoutes);
+router.use("/favorites", favoriteRoutes);
 
 export default router;

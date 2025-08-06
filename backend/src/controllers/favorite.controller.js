@@ -22,7 +22,7 @@ export const FavoriteController = {
         servings: servings || null,
       };
 
-      const newFavorite = await FavoriteModel.add(favoriteData);
+      const newFavorite = await FavoriteModel.addFavorite(favoriteData);
 
       res.status(201).json({
         success: true,
@@ -30,10 +30,27 @@ export const FavoriteController = {
         message: "Recipe added to favorites successfully",
       });
     } catch (error) {
-      console.error("Error adding favorite:", error);
+      console.log("Error adding favorite:", error);
       res.status(500).json({
         success: false,
-        error: "Internal server error",
+        message: error.message,
+      });
+    }
+  },
+  removeFavorite: async (req, res) => {
+    try {
+      const { userId, recipeId } = req.params;
+
+      await FavoriteModel.removeFavorite(userId, recipeId);
+
+      res.status(200).json({
+        message: "Favorite removed successfully",
+      });
+    } catch (error) {
+      console.error("Error removing favorite:", error);
+      res.status(500).json({
+        success: false,
+        message: error.message,
       });
     }
   },
