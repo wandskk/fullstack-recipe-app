@@ -22,10 +22,14 @@ app.use(notFoundHandler);
 app.use(errorLogger);
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  logInfo("Server started", {
-    port: PORT,
-    environment: ENV.NODE_ENV,
-    healthCheck: `http://localhost:${PORT}/api/health`,
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    logInfo("Server started", {
+      port: PORT,
+      environment: ENV.NODE_ENV,
+      healthCheck: `http://localhost:${PORT}/api/health`,
+    });
   });
-});
+}
+
+export { app };
