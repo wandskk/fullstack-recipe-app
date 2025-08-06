@@ -33,4 +33,19 @@ export const FavoriteModel = {
       throw new Error(`Failed to remove favorite: ${error.message}`);
     }
   },
+  getFavorites: async (userId) => {
+    try {
+      const favorites = await db
+        .select()
+        .from(favoritesTable)
+        .where(eq(favoritesTable.userId, userId));
+
+      if (favorites.length === 0)
+        throw new Error("You don't have any favorites");
+
+      return favorites;
+    } catch (error) {
+      throw new Error(`Failed to fetch favorites: ${error.message}`);
+    }
+  },
 };

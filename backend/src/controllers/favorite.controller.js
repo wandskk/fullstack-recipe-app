@@ -54,4 +54,22 @@ export const FavoriteController = {
       });
     }
   },
+  getFavorites: async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const favorites = await FavoriteModel.getFavorites(userId);
+
+      res.status(200).json({
+        success: true,
+        data: favorites,
+        message: "Favorites retrieved successfully",
+      });
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
 };
