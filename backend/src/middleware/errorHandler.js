@@ -1,3 +1,5 @@
+import { logError } from "../utils/logger.js";
+
 const createAppError = (message, statusCode = 500, isOperational = true) => {
   const error = new Error(message);
   error.statusCode = statusCode;
@@ -31,12 +33,11 @@ const errorHandler = (err, req, res, next) => {
   let error = { ...err };
   error.message = err.message;
 
-  console.error('Error:', {
-    message: err.message,
-    stack: err.stack,
+  logError("Error occurred", error, {
     url: req.originalUrl,
     method: req.method,
-    timestamp: new Date().toISOString(),
+    userAgent: req.get("User-Agent"),
+    ip: req.ip || req.connection.remoteAddress,
   });
 
   if (err.name === 'CastError') {

@@ -19,7 +19,8 @@
     "drizzle-orm": "^0.44.2",
     "express": "^5.1.0",
     "express-rate-limit": "^8.0.1",
-    "joi": "^18.0.0"
+    "joi": "^18.0.0",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "drizzle-kit": "^0.31.1",
