@@ -5,14 +5,6 @@ export const FavoriteController = {
     try {
       const { userId, recipeId, title, image, cookTime, servings } = req.body;
 
-      if (!userId || !recipeId || !title) {
-        return res.status(400).json({
-          success: false,
-          error:
-            "Missing required fields: userId, recipeId, and title are required",
-        });
-      }
-
       const favoriteData = {
         userId,
         recipeId,
@@ -44,6 +36,7 @@ export const FavoriteController = {
       await FavoriteModel.removeFavorite(userId, recipeId);
 
       res.status(200).json({
+        success: true,
         message: "Favorite removed successfully",
       });
     } catch (error) {
