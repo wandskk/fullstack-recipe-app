@@ -3,12 +3,15 @@ import cors from "cors";
 import { ENV } from "./config/env.js";
 import router from "./routes/index.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
+import { generalLimiter } from "./middleware/rateLimit.js";
 
 const app = express();
 const PORT = ENV.PORT || 5001;
 
 app.use(cors());
 app.use(express.json());
+
+app.use(generalLimiter);
 
 app.use("/api", router);
 

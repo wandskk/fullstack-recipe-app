@@ -5,15 +5,19 @@ import {
   validateUserId,
   validateFavoriteParams,
 } from "../middleware/validation.js";
+import { favoritesLimiter } from "../middleware/rateLimit.js";
 
 const router = Router();
 
-router.post("/", validateFavoriteData, FavoriteController.addFavorite);
+router.post("/", favoritesLimiter, validateFavoriteData, FavoriteController.addFavorite);
+
 router.delete(
   "/:userId/:recipeId",
+  favoritesLimiter,
   validateFavoriteParams,
   FavoriteController.removeFavorite
 );
-router.get("/:userId", validateUserId, FavoriteController.getFavorites);
+
+router.get("/:userId", favoritesLimiter, validateUserId, FavoriteController.getFavorites);
 
 export { router as favoriteRoutes };
